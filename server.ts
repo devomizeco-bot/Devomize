@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import { WordPressSite, WooProduct, WooOrder, WordPressUser, DashboardStats, AuditLog } from './src/types';
 
 dotenv.config();
+process.env.DISABLE_HMR = 'true';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1415,12 +1416,11 @@ async function startServer() {
 
   if (process.env.NODE_ENV !== 'production') {
     const { createServer: createViteServer } = await import('vite');
-    const isHmrDisabled = process.env.DISABLE_HMR === 'true';
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
-        hmr: isHmrDisabled ? false : { server: httpServer },
-        watch: isHmrDisabled ? null : {},
+        hmr: false,
+        watch: null,
       },
       appType: 'spa',
     });

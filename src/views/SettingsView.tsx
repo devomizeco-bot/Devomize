@@ -1,35 +1,22 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import {
-  getSavedSupabaseConfig,
-  saveSupabaseConfig,
-  resetSupabaseClient,
-  SUPABASE_SQL_SCHEMA,
-} from '../lib/supabase';
-import {
   User,
   Shield,
   Palette,
-  Database,
-  Activity,
   Check,
-  Copy,
   LogOut,
   Moon,
   Sun,
   Lock,
   Smartphone,
   Mail,
-  Server,
-  FileCode,
 } from 'lucide-react';
 
 export const SettingsView: React.FC = () => {
   const { user, updateUser, logout, theme, toggleTheme, showToast } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'appearance' | 'database'>(
-    'profile'
-  );
+  const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'appearance'>('profile');
 
   // Profile Form
   const [name, setName] = useState(user?.name || '');
@@ -41,12 +28,6 @@ export const SettingsView: React.FC = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  // Supabase Config
-  const savedCfg = getSavedSupabaseConfig();
-  const [supabaseUrl, setSupabaseUrl] = useState(savedCfg?.url || '');
-  const [supabaseAnonKey, setSupabaseAnonKey] = useState(savedCfg?.anonKey || '');
-  const [copiedSql, setCopiedSql] = useState(false);
 
   const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,35 +58,10 @@ export const SettingsView: React.FC = () => {
     setConfirmPassword('');
   };
 
-  const handleSaveSupabaseConfig = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!supabaseUrl.trim() || !supabaseAnonKey.trim()) {
-      saveSupabaseConfig(null);
-      resetSupabaseClient();
-      showToast('Supabase configuration cleared. Using local persistence.', 'info');
-      return;
-    }
-
-    saveSupabaseConfig({
-      url: supabaseUrl.trim(),
-      anonKey: supabaseAnonKey.trim(),
-    });
-    resetSupabaseClient();
-    showToast('Supabase configuration saved & client re-initialized', 'success');
-  };
-
-  const copySqlSchema = () => {
-    navigator.clipboard.writeText(SUPABASE_SQL_SCHEMA);
-    setCopiedSql(true);
-    showToast('Supabase SQL schema copied to clipboard', 'success');
-    setTimeout(() => setCopiedSql(false), 3000);
-  };
-
   const tabs = [
     { id: 'profile', label: 'Profile', icon: User },
     { id: 'security', label: 'Security', icon: Shield },
     { id: 'appearance', label: 'Appearance', icon: Palette },
-    { id: 'database', label: 'Supabase Database', icon: Database },
   ];
 
   return (
@@ -114,7 +70,7 @@ export const SettingsView: React.FC = () => {
       <div className="pb-3 border-b border-neutral-800">
         <h1 className="text-xl font-bold uppercase tracking-wider text-white">Settings</h1>
         <p className="text-xs text-neutral-400 mt-0.5">
-          Owner Profile, Authentication, Database & Control Panel Preferences
+          Owner Profile, Authentication & Control Panel Preferences
         </p>
       </div>
 
@@ -339,86 +295,6 @@ export const SettingsView: React.FC = () => {
                 </p>
               </div>
             </button>
-          </div>
-        </div>
-      )}
-
-      {/* Supabase Database Tab */}
-      {activeTab === 'database' && (
-        <div className="p-5 rounded-lg border border-neutral-800 bg-neutral-950 space-y-5">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-sm font-bold uppercase tracking-wider text-white">
-                Supabase Integration & Database
-              </h2>
-              <p className="text-xs text-neutral-400">
-                Persistent PostgreSQL cloud storage and Supabase Authentication
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={copySqlSchema}
-              className="flex items-center gap-1 px-3 py-1.5 rounded bg-neutral-900 hover:bg-neutral-800 text-xs font-semibold uppercase tracking-wider text-sky-400 border border-neutral-800"
-            >
-              <Copy className="w-3.5 h-3.5" />
-              <span>{copiedSql ? 'Copied SQL!' : 'Copy SQL Schema'}</span>
-            </button>
-          </div>
-
-          <form onSubmit={handleSaveSupabaseConfig} className="space-y-3 max-w-lg">
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
-                Supabase Project URL
-              </label>
-              <input
-                type="url"
-                placeholder="https://xyzproject.supabase.co"
-                value={supabaseUrl}
-                onChange={(e) => setSupabaseUrl(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-neutral-900 border border-neutral-800 rounded text-white font-mono focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
-                Supabase Anon / Public Key
-              </label>
-              <input
-                type="password"
-                placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                value={supabaseAnonKey}
-                onChange={(e) => setSupabaseAnonKey(e.target.value)}
-                className="w-full px-3 py-2 text-xs bg-neutral-900 border border-neutral-800 rounded text-white font-mono focus:outline-none"
-              />
-            </div>
-
-            <div className="pt-2 flex items-center gap-2">
-              <button
-                type="submit"
-                className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded bg-sky-500 hover:bg-sky-400 text-black transition-colors"
-              >
-                Save Supabase Configuration
-              </button>
-            </div>
-          </form>
-
-          {/* SQL Preview Box */}
-          <div className="p-3 rounded bg-neutral-900/60 border border-neutral-800/80">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 font-mono">
-                Supabase Table DDL & Row Level Security:
-              </span>
-              <button
-                type="button"
-                onClick={copySqlSchema}
-                className="text-[10px] text-sky-400 hover:underline uppercase font-mono"
-              >
-                Copy All SQL
-              </button>
-            </div>
-            <pre className="p-3 rounded bg-black border border-neutral-900 text-[10px] text-neutral-400 font-mono max-h-48 overflow-y-auto leading-relaxed">
-              {SUPABASE_SQL_SCHEMA}
-            </pre>
           </div>
         </div>
       )}

@@ -1,61 +1,35 @@
 import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
 import { UserProfile } from '../types';
 
-const STORAGE_KEY_SUPABASE_CONFIG = 'wp_master_supabase_config';
 const STORAGE_KEY_LOCAL_USER = 'wp_master_local_user';
 const STORAGE_KEY_LOCAL_PROFILE = 'wp_master_local_profile';
 
-export interface SupabaseConfig {
-  url: string;
-  anonKey: string;
-}
-
-export function getSavedSupabaseConfig(): SupabaseConfig | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY_SUPABASE_CONFIG);
-    if (raw) return JSON.parse(raw);
-  } catch {
-    // ignore
-  }
-
-  const envUrl = import.meta.env.VITE_SUPABASE_URL;
-  const envKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-  if (envUrl && envKey) {
-    return { url: envUrl, anonKey: envKey };
-  }
-  return null;
-}
-
-export function saveSupabaseConfig(config: SupabaseConfig | null) {
-  if (!config || !config.url || !config.anonKey) {
-    localStorage.removeItem(STORAGE_KEY_SUPABASE_CONFIG);
-  } else {
-    localStorage.setItem(STORAGE_KEY_SUPABASE_CONFIG, JSON.stringify(config));
-  }
-}
+// Direct production Supabase credentials provided by project owner
+const SUPABASE_URL =
+  import.meta.env.VITE_SUPABASE_URL || 'https://rwowstbnwejfvmxcbzam.supabase.co';
+const SUPABASE_ANON_KEY =
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ3b3dzdGJud2VqZnZteGNiemFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzMDQ5MzMsImV4cCI6MjEwNjg4MDkzM30.hV6hQ5uCKITl3mwkErJDoBRkCq2-qSyuaHldR-j24x8';
 
 let supabaseInstance: SupabaseClient | null = null;
 
 export function getSupabase(): SupabaseClient | null {
-  const cfg = getSavedSupabaseConfig();
-  if (!cfg?.url || !cfg?.anonKey) return null;
-
   if (!supabaseInstance) {
     try {
-      supabaseInstance = createClient(cfg.url, cfg.anonKey, {
+      supabaseInstance = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         auth: {
           persistSession: true,
           autoRefreshToken: true,
         },
       });
     } catch {
-      supabaseInstance = null;
+      supabaseInstance = null as any;
     }
   }
   return supabaseInstance;
 }
 
-// Reset instance when config changes
+// Reset instance if needed
 export function resetSupabaseClient() {
   supabaseInstance = null;
 }
