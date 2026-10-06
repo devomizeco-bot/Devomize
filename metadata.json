@@ -1,0 +1,6 @@
+{
+  "name": "WP Master Control Panel",
+  "description": "Centralized Master WordPress & WooCommerce Control Panel PWA for managing multiple sites, products, orders, users, and admin access.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
