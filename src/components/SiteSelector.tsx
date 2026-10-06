@@ -30,27 +30,25 @@ export const SiteSelector: React.FC<SiteSelectorProps> = ({ className = '', isCo
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-between gap-2 px-3 py-2 text-sm font-medium transition-colors border rounded-md cursor-pointer select-none text-left w-full
-          bg-neutral-900/60 hover:bg-neutral-800/80 text-neutral-100 border-neutral-800
-          dark:bg-neutral-950 dark:border-neutral-800 dark:hover:border-neutral-700
-          light:bg-neutral-100 light:border-neutral-300 light:text-neutral-900 light:hover:bg-neutral-200
-        `}
+        className="flex items-center justify-between gap-2 px-3 py-2 text-sm font-medium transition-colors border rounded-md cursor-pointer select-none text-left w-full
+          bg-neutral-100 hover:bg-neutral-200 text-neutral-900 border-neutral-300
+          dark:bg-neutral-950 dark:hover:bg-neutral-900 dark:text-neutral-100 dark:border-neutral-800"
         aria-label="Select WordPress website"
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-2 truncate">
-          <Globe className="w-4 h-4 shrink-0 text-sky-400" />
+          <Globe className="w-4 h-4 shrink-0 text-sky-500 dark:text-sky-400" />
           <span className="truncate tracking-wide uppercase font-semibold text-xs sm:text-sm">
             {label}
           </span>
           {selectedSiteId === 'all' && (
-            <span className="text-[10px] text-neutral-400 border border-neutral-700/80 px-1 py-0.2 rounded font-mono">
+            <span className="text-[10px] text-neutral-600 dark:text-neutral-400 border border-neutral-300 dark:border-neutral-700/80 px-1 py-0.2 rounded font-mono">
               {sites.length}
             </span>
           )}
         </div>
         <ChevronDown
-          className={`w-3.5 h-3.5 shrink-0 text-neutral-400 transition-transform duration-200 ${
+          className={`w-3.5 h-3.5 shrink-0 text-neutral-500 dark:text-neutral-400 transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
           }`}
         />
@@ -58,13 +56,11 @@ export const SiteSelector: React.FC<SiteSelectorProps> = ({ className = '', isCo
 
       {isOpen && (
         <div
-          className={`absolute left-0 mt-1.5 w-72 max-w-[90vw] z-50 py-1.5 border shadow-2xl rounded-md backdrop-blur-md
-            bg-neutral-950/95 border-neutral-800 text-neutral-200
-            dark:bg-black/95 dark:border-neutral-800
-            light:bg-white light:border-neutral-300 light:text-neutral-800 light:shadow-lg
-          `}
+          className="absolute left-0 mt-1.5 w-72 max-w-[90vw] z-50 py-1.5 border shadow-xl rounded-md backdrop-blur-md
+            bg-white border-neutral-200 text-neutral-900
+            dark:bg-black/95 dark:border-neutral-800 dark:text-neutral-100"
         >
-          <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider font-semibold text-neutral-400 border-b border-neutral-800/60 flex items-center justify-between">
+          <div className="px-3 py-1.5 text-[10px] uppercase tracking-wider font-semibold text-neutral-500 dark:text-neutral-400 border-b border-neutral-200 dark:border-neutral-800/60 flex items-center justify-between">
             <span>WordPress Instances</span>
             <span>{sites.length} Sites</span>
           </div>
@@ -77,15 +73,19 @@ export const SiteSelector: React.FC<SiteSelectorProps> = ({ className = '', isCo
                 setSelectedSiteId('all');
                 setIsOpen(false);
               }}
-              className={`w-full px-3 py-2 text-left text-xs font-medium flex items-center justify-between hover:bg-neutral-800/60 transition-colors ${
-                selectedSiteId === 'all' ? 'text-sky-400 bg-sky-950/20' : ''
+              className={`w-full px-3 py-2 text-left text-xs font-medium flex items-center justify-between hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors ${
+                selectedSiteId === 'all'
+                  ? 'text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/30'
+                  : ''
               }`}
             >
               <div className="flex items-center gap-2 truncate">
-                <Server className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                <Server className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400 shrink-0" />
                 <span className="font-semibold tracking-wide uppercase">All Websites (Aggregate)</span>
               </div>
-              {selectedSiteId === 'all' && <Check className="w-3.5 h-3.5 text-sky-400 shrink-0" />}
+              {selectedSiteId === 'all' && (
+                <Check className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
+              )}
             </button>
 
             {/* Individual sites */}
@@ -99,8 +99,10 @@ export const SiteSelector: React.FC<SiteSelectorProps> = ({ className = '', isCo
                     setSelectedSiteId(site.id);
                     setIsOpen(false);
                   }}
-                  className={`w-full px-3 py-2 text-left text-xs font-medium flex items-center justify-between hover:bg-neutral-800/60 transition-colors ${
-                    isSelected ? 'text-sky-400 bg-sky-950/20' : ''
+                  className={`w-full px-3 py-2 text-left text-xs font-medium flex items-center justify-between hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors ${
+                    isSelected
+                      ? 'text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/30'
+                      : ''
                   }`}
                 >
                   <div className="flex items-center gap-2 truncate">
@@ -116,23 +118,27 @@ export const SiteSelector: React.FC<SiteSelectorProps> = ({ className = '', isCo
                     />
                     <div className="truncate">
                       <div className="font-semibold truncate">{site.name}</div>
-                      <div className="text-[10px] text-neutral-400 font-mono truncate">{site.siteUrl}</div>
+                      <div className="text-[10px] text-neutral-500 dark:text-neutral-400 font-mono truncate">
+                        {site.siteUrl}
+                      </div>
                     </div>
                   </div>
-                  {isSelected && <Check className="w-3.5 h-3.5 text-sky-400 shrink-0" />}
+                  {isSelected && (
+                    <Check className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
+                  )}
                 </button>
               );
             })}
           </div>
 
-          <div className="pt-1.5 mt-1 border-t border-neutral-800/60 px-2">
+          <div className="pt-1.5 mt-1 border-t border-neutral-200 dark:border-neutral-800/60 px-2">
             <button
               type="button"
               onClick={() => {
                 setIsOpen(false);
                 openAddSiteModal();
               }}
-              className="w-full py-1.5 px-2.5 text-xs font-medium flex items-center justify-center gap-1.5 rounded text-sky-400 hover:bg-sky-950/40 border border-dashed border-sky-800/50 transition-colors uppercase tracking-wider"
+              className="w-full py-1.5 px-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 rounded text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-950/40 border border-dashed border-sky-300 dark:border-sky-800/50 transition-colors uppercase tracking-wider"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Connect New Site</span>

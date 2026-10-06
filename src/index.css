@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --font-sans: 'Barlow Condensed', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -15,9 +17,10 @@
     --text-muted: #64748b;
     --border-primary: #e2e8f0;
     --border-subtle: #f1f5f9;
+    color-scheme: light;
   }
 
-  .dark {
+  .dark, [data-theme="dark"] {
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
     --bg-tertiary: #141414;
@@ -26,6 +29,7 @@
     --text-muted: #71717a;
     --border-primary: #262626;
     --border-subtle: #171717;
+    color-scheme: dark;
   }
 
   html {
@@ -39,6 +43,7 @@
     color: var(--text-primary);
     overflow-x: hidden;
     min-height: 100dvh;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
 

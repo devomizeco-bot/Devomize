@@ -31,23 +31,23 @@ export const AuditLogDrawer: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-black/60 backdrop-blur-xs flex justify-end">
-      <div className="w-full max-w-md h-full bg-neutral-950 border-l border-neutral-800 text-neutral-100 flex flex-col shadow-2xl animate-in slide-in-from-right duration-200">
-        <div className="p-4 border-b border-neutral-800 flex items-center justify-between">
+      <div className="w-full max-w-md h-full bg-white dark:bg-neutral-950 border-l border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-neutral-100 flex flex-col shadow-2xl animate-in slide-in-from-right duration-200">
+        <div className="p-4 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-sky-400" />
-            <h3 className="text-sm font-bold uppercase tracking-wider text-white">System Audit Trail</h3>
+            <Activity className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+            <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-900 dark:text-white">System Audit Trail</h3>
           </div>
           <div className="flex items-center gap-1">
             <button
               onClick={fetchLogs}
-              className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
+              className="p-1.5 rounded text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
               title="Refresh Logs"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
             </button>
             <button
               onClick={toggleAuditDrawer}
-              className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
+              className="p-1.5 rounded text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -74,10 +74,10 @@ export const AuditLogDrawer: React.FC = () => {
               return (
                 <div
                   key={log.id}
-                  className="p-3 rounded border border-neutral-800/80 bg-neutral-900/40 text-xs space-y-1.5"
+                  className="p-3 rounded-lg border border-neutral-200 dark:border-neutral-800/80 bg-neutral-50 dark:bg-neutral-900/40 text-xs space-y-1.5"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-white tracking-wide uppercase">
+                    <span className="font-semibold text-neutral-900 dark:text-white tracking-wide uppercase">
                       {log.action}
                     </span>
                     <span className="text-[10px] text-neutral-500 font-mono">
@@ -86,12 +86,12 @@ export const AuditLogDrawer: React.FC = () => {
                   </div>
 
                   {log.siteName && (
-                    <div className="text-[11px] text-sky-400 font-medium truncate">
+                    <div className="text-[11px] text-sky-600 dark:text-sky-400 font-medium truncate">
                       {log.siteName}
                     </div>
                   )}
 
-                  <p className="text-[11px] text-neutral-300 leading-relaxed font-sans">
+                  <p className="text-[11px] text-neutral-600 dark:text-neutral-300 leading-relaxed font-sans">
                     {log.details}
                   </p>
                 </div>
@@ -100,7 +100,7 @@ export const AuditLogDrawer: React.FC = () => {
           )}
         </div>
 
-        <div className="p-3 border-t border-neutral-800 bg-neutral-900/50 text-center text-[10px] uppercase tracking-wider text-neutral-500 font-mono">
+        <div className="p-3 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/50 text-center text-[10px] uppercase tracking-wider text-neutral-500 font-mono">
           Security Log Layer · End-to-End Auditing
         </div>
       </div>

@@ -23,10 +23,10 @@ const MainLayout: React.FC = () => {
 
   if (isAuthLoading) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
-        <Loader2 className="w-8 h-8 animate-spin text-sky-400 mb-2" />
+      <div className="min-h-screen bg-neutral-100 dark:bg-black flex flex-col items-center justify-center text-neutral-900 dark:text-white transition-colors">
+        <Loader2 className="w-8 h-8 animate-spin text-sky-500 mb-2" />
         <span className="text-xs font-mono uppercase tracking-widest text-neutral-500">
-          Initializing WP Master
+          Initializing DEVOMIZE
         </span>
       </div>
     );
@@ -58,7 +58,7 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-black text-neutral-100 dark:bg-black light:bg-neutral-50 light:text-neutral-900">
+    <div className="min-h-screen flex bg-neutral-50 dark:bg-black text-neutral-900 dark:text-neutral-100 transition-colors duration-200">
       {/* Desktop Sidebar */}
       <Sidebar />
 

@@ -218,15 +218,15 @@ export const ProductsView: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 p-3 rounded border border-neutral-800 bg-neutral-950">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 p-3 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-sm">
         <form onSubmit={handleSearchSubmit} className="flex-1 relative">
-          <Search className="w-4 h-4 text-neutral-500 absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-neutral-400 dark:text-neutral-500 absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search products by title, SKU, or category..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-neutral-900 border border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-white placeholder-neutral-500"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500"
           />
         </form>
 
@@ -234,7 +234,7 @@ export const ProductsView: React.FC = () => {
           <select
             value={stockFilter}
             onChange={(e) => setStockFilter(e.target.value)}
-            className="px-2.5 py-1.5 text-xs font-medium bg-neutral-900 border border-neutral-800 rounded text-neutral-300 focus:outline-none uppercase tracking-wide cursor-pointer"
+            className="px-2.5 py-1.5 text-xs font-medium bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-800 dark:text-neutral-300 focus:outline-none uppercase tracking-wide cursor-pointer"
           >
             <option value="all">All Stock Statuses</option>
             <option value="instock">In Stock</option>
@@ -245,7 +245,7 @@ export const ProductsView: React.FC = () => {
           <button
             type="button"
             onClick={fetchProducts}
-            className="p-1.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white"
+            className="p-1.5 rounded bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white"
             title="Refresh Products"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
@@ -259,9 +259,9 @@ export const ProductsView: React.FC = () => {
           Loading WooCommerce Catalog...
         </div>
       ) : products.length === 0 ? (
-        <div className="p-12 text-center rounded border border-dashed border-neutral-800 bg-neutral-950/40">
-          <Package className="w-8 h-8 text-neutral-600 mx-auto mb-2" />
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-300">
+        <div className="p-12 text-center rounded-lg border border-dashed border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/40">
+          <Package className="w-8 h-8 text-neutral-400 dark:text-neutral-600 mx-auto mb-2" />
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-800 dark:text-neutral-300">
             No Products Found
           </h3>
           <p className="text-xs text-neutral-500 mt-1 max-w-sm mx-auto">
@@ -269,7 +269,7 @@ export const ProductsView: React.FC = () => {
           </p>
           <button
             onClick={openAddModal}
-            className="mt-4 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded bg-neutral-900 hover:bg-neutral-800 text-sky-400 border border-neutral-800"
+            className="mt-4 px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-sky-600 dark:text-sky-400 border border-neutral-300 dark:border-neutral-800"
           >
             Create First Product
           </button>
@@ -277,9 +277,9 @@ export const ProductsView: React.FC = () => {
       ) : (
         <>
           {/* Desktop Table View */}
-          <div className="hidden md:block overflow-x-auto rounded border border-neutral-800 bg-neutral-950">
-            <table className="w-full text-left text-xs text-neutral-300 border-collapse">
-              <thead className="bg-neutral-900/60 uppercase font-semibold text-[11px] text-neutral-400 border-b border-neutral-800">
+          <div className="hidden md:block overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-sm">
+            <table className="w-full text-left text-xs text-neutral-700 dark:text-neutral-300 border-collapse">
+              <thead className="bg-neutral-50 dark:bg-neutral-900/60 uppercase font-semibold text-[11px] text-neutral-600 dark:text-neutral-400 border-b border-neutral-200 dark:border-neutral-800">
                 <tr>
                   <th className="p-3 w-12">Image</th>
                   <th className="p-3">Product Name</th>
@@ -292,36 +292,36 @@ export const ProductsView: React.FC = () => {
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-neutral-850">
+              <tbody className="divide-y divide-neutral-200 dark:divide-neutral-800">
                 {products.map((p) => (
-                  <tr key={p.id} className="hover:bg-neutral-900/40 transition-colors">
+                  <tr key={p.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition-colors">
                     <td className="p-3">
-                      <div className="w-10 h-10 rounded bg-neutral-900 border border-neutral-800 overflow-hidden flex items-center justify-center">
+                      <div className="w-10 h-10 rounded bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden flex items-center justify-center">
                         {p.images[0] ? (
                           <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
                         ) : (
-                          <ImageIcon className="w-4 h-4 text-neutral-600" />
+                          <ImageIcon className="w-4 h-4 text-neutral-400 dark:text-neutral-600" />
                         )}
                       </div>
                     </td>
-                    <td className="p-3 font-medium text-white max-w-xs">
+                    <td className="p-3 font-medium text-neutral-900 dark:text-white max-w-xs">
                       <div className="truncate font-semibold">{p.name}</div>
                       <div className="text-[10px] text-neutral-500 font-mono truncate">{p.slug}</div>
                     </td>
                     {selectedSiteId === 'all' && (
-                      <td className="p-3 text-[11px] text-neutral-400 font-medium truncate">
+                      <td className="p-3 text-[11px] text-neutral-600 dark:text-neutral-400 font-medium truncate">
                         {p.siteName}
                       </td>
                     )}
-                    <td className="p-3 font-mono text-[11px] text-neutral-400">{p.sku}</td>
+                    <td className="p-3 font-mono text-[11px] text-neutral-600 dark:text-neutral-400">{p.sku}</td>
                     <td className="p-3 font-mono">
                       {p.salePrice ? (
                         <div>
-                          <span className="text-emerald-400 font-bold">${p.salePrice}</span>{' '}
-                          <span className="text-neutral-500 line-through text-[10px]">${p.regularPrice}</span>
+                          <span className="text-emerald-600 dark:text-emerald-400 font-bold">${p.salePrice}</span>{' '}
+                          <span className="text-neutral-400 line-through text-[10px]">${p.regularPrice}</span>
                         </div>
                       ) : (
-                        <span className="text-white">${p.regularPrice}</span>
+                        <span className="text-neutral-900 dark:text-white font-medium">${p.regularPrice}</span>
                       )}
                     </td>
                     <td className="p-3">
@@ -329,10 +329,10 @@ export const ProductsView: React.FC = () => {
                         <span
                           className={`w-1.5 h-1.5 rounded-full ${
                             p.stockStatus === 'instock'
-                              ? 'bg-emerald-400'
+                              ? 'bg-emerald-500'
                               : p.stockStatus === 'onbackorder'
-                              ? 'bg-amber-400'
-                              : 'bg-rose-400'
+                              ? 'bg-amber-500'
+                              : 'bg-rose-500'
                           }`}
                         />
                         <span className="capitalize text-[11px]">
@@ -340,9 +340,9 @@ export const ProductsView: React.FC = () => {
                         </span>
                       </div>
                     </td>
-                    <td className="p-3 text-[11px] text-neutral-400">{p.category}</td>
+                    <td className="p-3 text-[11px] text-neutral-600 dark:text-neutral-400">{p.category}</td>
                     <td className="p-3">
-                      <span className="uppercase text-[10px] font-mono tracking-wider px-1.5 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-300">
+                      <span className="uppercase text-[10px] font-mono tracking-wider px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300">
                         {p.status}
                       </span>
                     </td>
@@ -351,7 +351,7 @@ export const ProductsView: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => openEditModal(p)}
-                          className="p-1 rounded text-neutral-400 hover:text-sky-400 hover:bg-neutral-900"
+                          className="p-1 rounded text-neutral-500 hover:text-sky-600 dark:text-neutral-400 dark:hover:text-sky-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
                           title="Edit Product"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
@@ -359,7 +359,7 @@ export const ProductsView: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleDuplicate(p)}
-                          className="p-1 rounded text-neutral-400 hover:text-white hover:bg-neutral-900"
+                          className="p-1 rounded text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
                           title="Duplicate Product"
                         >
                           <Copy className="w-3.5 h-3.5" />
@@ -367,7 +367,7 @@ export const ProductsView: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleDelete(p)}
-                          className="p-1 rounded text-neutral-400 hover:text-rose-400 hover:bg-neutral-900"
+                          className="p-1 rounded text-neutral-500 hover:text-rose-600 dark:text-neutral-400 dark:hover:text-rose-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
                           title="Delete Product"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -385,44 +385,44 @@ export const ProductsView: React.FC = () => {
             {products.map((p) => (
               <div
                 key={p.id}
-                className="p-3 rounded border border-neutral-800 bg-neutral-950 flex flex-col gap-2.5"
+                className="p-3 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 flex flex-col gap-2.5 shadow-sm"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded bg-neutral-900 border border-neutral-800 overflow-hidden shrink-0">
+                  <div className="w-12 h-12 rounded bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden shrink-0">
                     {p.images[0] ? (
                       <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
                     ) : (
-                      <ImageIcon className="w-5 h-5 text-neutral-600 m-auto mt-3" />
+                      <ImageIcon className="w-5 h-5 text-neutral-400 m-auto mt-3" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-bold text-sm text-white truncate">{p.name}</div>
-                    <div className="text-[11px] text-neutral-400 font-mono">SKU: {p.sku}</div>
+                    <div className="font-bold text-sm text-neutral-900 dark:text-white truncate">{p.name}</div>
+                    <div className="text-[11px] text-neutral-500 font-mono">SKU: {p.sku}</div>
                     {selectedSiteId === 'all' && (
-                      <div className="text-[10px] text-sky-400">{p.siteName}</div>
+                      <div className="text-[10px] text-sky-600 dark:text-sky-400 font-medium">{p.siteName}</div>
                     )}
                   </div>
                   <div className="text-right">
-                    <div className="font-mono font-bold text-sm text-white">
+                    <div className="font-mono font-bold text-sm text-neutral-900 dark:text-white">
                       ${p.salePrice || p.regularPrice}
                     </div>
                     {p.salePrice && (
-                      <div className="text-[10px] text-neutral-500 line-through">
+                      <div className="text-[10px] text-neutral-400 line-through">
                         ${p.regularPrice}
                       </div>
                     )}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-xs pt-2 border-t border-neutral-850">
-                  <div className="flex items-center gap-1.5 text-neutral-400">
+                <div className="flex items-center justify-between text-xs pt-2 border-t border-neutral-200 dark:border-neutral-800">
+                  <div className="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-400">
                     <span
                       className={`w-2 h-2 rounded-full ${
                         p.stockStatus === 'instock'
-                          ? 'bg-emerald-400'
+                          ? 'bg-emerald-500'
                           : p.stockStatus === 'onbackorder'
-                          ? 'bg-amber-400'
-                          : 'bg-rose-400'
+                          ? 'bg-amber-500'
+                          : 'bg-rose-500'
                       }`}
                     />
                     <span>{p.stockQuantity !== null ? `${p.stockQuantity} in stock` : p.stockStatus}</span>
@@ -431,19 +431,19 @@ export const ProductsView: React.FC = () => {
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => openEditModal(p)}
-                      className="px-2 py-1 rounded bg-neutral-900 text-sky-400 text-xs font-semibold uppercase"
+                      className="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-900 text-sky-600 dark:text-sky-400 text-xs font-semibold uppercase"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDuplicate(p)}
-                      className="px-2 py-1 rounded bg-neutral-900 text-neutral-300 text-xs font-semibold uppercase"
+                      className="px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 text-xs font-semibold uppercase"
                     >
                       Duplicate
                     </button>
                     <button
                       onClick={() => handleDelete(p)}
-                      className="p-1 rounded text-rose-400"
+                      className="p-1 rounded text-rose-600 dark:text-rose-400"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -457,16 +457,16 @@ export const ProductsView: React.FC = () => {
 
       {/* Add / Edit Product Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="w-full max-w-2xl rounded-lg border border-neutral-800 bg-neutral-950 p-6 shadow-2xl text-neutral-100 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
-              <h2 className="text-base font-bold uppercase tracking-wider text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 overflow-y-auto">
+          <div className="w-full max-w-2xl rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 shadow-2xl text-neutral-900 dark:text-neutral-100 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-800">
+              <h2 className="text-base font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
                 {editingProduct ? 'Edit WooCommerce Product' : 'Add New Product'}
               </h2>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 text-neutral-400 hover:text-white"
+                className="p-1 text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -475,14 +475,14 @@ export const ProductsView: React.FC = () => {
             <form onSubmit={handleSaveProduct} className="mt-4 space-y-4">
               {/* Target Website Selector */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                   Target WordPress Website
                 </label>
                 <select
                   value={formSiteId}
                   onChange={(e) => setFormSiteId(e.target.value)}
                   disabled={!!editingProduct}
-                  className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white focus:outline-none uppercase"
+                  className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white focus:outline-none uppercase"
                 >
                   {sites.map((s) => (
                     <option key={s.id} value={s.id}>
@@ -494,7 +494,7 @@ export const ProductsView: React.FC = () => {
 
               {/* Product Name */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                   Product Name
                 </label>
                 <input
@@ -502,7 +502,7 @@ export const ProductsView: React.FC = () => {
                   placeholder="e.g. Minimalist Wool Overshirt"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white focus:outline-none focus:border-sky-500"
+                  className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white focus:outline-none focus:border-sky-500"
                   required
                 />
               </div>
@@ -510,7 +510,7 @@ export const ProductsView: React.FC = () => {
               {/* Prices & SKU */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                     Regular Price ($)
                   </label>
                   <input
@@ -519,13 +519,13 @@ export const ProductsView: React.FC = () => {
                     placeholder="120.00"
                     value={regularPrice}
                     onChange={(e) => setRegularPrice(e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white font-mono"
+                    className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white font-mono"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                     Sale Price ($)
                   </label>
                   <input
@@ -534,12 +534,12 @@ export const ProductsView: React.FC = () => {
                     placeholder="99.00"
                     value={salePrice}
                     onChange={(e) => setSalePrice(e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white font-mono"
+                    className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white font-mono"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                     SKU
                   </label>
                   <input
@@ -547,7 +547,7 @@ export const ProductsView: React.FC = () => {
                     placeholder="PRD-001"
                     value={sku}
                     onChange={(e) => setSku(e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white font-mono uppercase"
+                    className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white font-mono uppercase"
                   />
                 </div>
               </div>
@@ -555,7 +555,7 @@ export const ProductsView: React.FC = () => {
               {/* Stock Quantity, Stock Status, Status */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                     Stock Quantity
                   </label>
                   <input
@@ -563,18 +563,18 @@ export const ProductsView: React.FC = () => {
                     placeholder="25"
                     value={stockQuantity}
                     onChange={(e) => setStockQuantity(e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white font-mono"
+                    className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white font-mono"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                     Stock Status
                   </label>
                   <select
                     value={stockStatus}
                     onChange={(e) => setStockStatus(e.target.value as StockStatus)}
-                    className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white"
+                    className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white"
                   >
                     <option value="instock">In Stock</option>
                     <option value="outofstock">Out of Stock</option>
@@ -583,13 +583,13 @@ export const ProductsView: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                     Publish Status
                   </label>
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value as ProductStatus)}
-                    className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white uppercase"
+                    className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white uppercase"
                   >
                     <option value="publish">Publish</option>
                     <option value="draft">Draft</option>
@@ -601,7 +601,7 @@ export const ProductsView: React.FC = () => {
               {/* Category, Tags, Image */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                     Category
                   </label>
                   <input
@@ -609,12 +609,12 @@ export const ProductsView: React.FC = () => {
                     placeholder="e.g. Apparel, Footwear, Tech"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white"
+                    className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                     Tags (comma separated)
                   </label>
                   <input
@@ -622,13 +622,13 @@ export const ProductsView: React.FC = () => {
                     placeholder="minimal, cotton, black"
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white"
+                    className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                   Featured Image URL
                 </label>
                 <input
@@ -636,12 +636,12 @@ export const ProductsView: React.FC = () => {
                   placeholder="https://images.unsplash.com/photo-..."
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
-                  className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white font-mono"
+                  className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white font-mono"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                   Short Description
                 </label>
                 <textarea
@@ -649,12 +649,12 @@ export const ProductsView: React.FC = () => {
                   placeholder="Brief summary shown on catalog pages..."
                   value={shortDescription}
                   onChange={(e) => setShortDescription(e.target.value)}
-                  className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white"
+                  className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                   Full Description
                 </label>
                 <textarea
@@ -662,15 +662,15 @@ export const ProductsView: React.FC = () => {
                   placeholder="Detailed product specifications, materials, and care instructions..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded text-white"
+                  className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-neutral-800">
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-neutral-200 dark:border-neutral-800">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded bg-neutral-900 hover:bg-neutral-800 text-neutral-300"
+                  className="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
                 >
                   Cancel
                 </button>

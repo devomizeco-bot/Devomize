@@ -59,36 +59,36 @@ export const AddSiteModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className="w-full max-w-lg rounded-lg border border-neutral-800 bg-neutral-950 p-6 shadow-2xl text-neutral-100 dark:bg-black dark:border-neutral-800">
-        <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
+      <div className="w-full max-w-lg rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 shadow-2xl text-neutral-900 dark:text-neutral-100">
+        <div className="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-800">
           <div>
-            <h2 className="text-base font-bold uppercase tracking-wider text-white">
+            <h2 className="text-base font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
               Connect WordPress Site
             </h2>
-            <p className="text-xs text-neutral-400 mt-0.5">
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
               Secure REST API Integration & Server-Side Encryption
             </p>
           </div>
           <button
             type="button"
             onClick={closeAddSiteModal}
-            className="p-1 rounded text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors"
+            className="p-1 rounded text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 rounded bg-rose-950/40 border border-rose-900/60 text-xs text-rose-300 flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+          <div className="mt-4 p-3 rounded bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-xs text-rose-700 dark:text-rose-300 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500 dark:text-rose-400" />
             <span>{error}</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
               Site Name
             </label>
             <input
@@ -96,44 +96,44 @@ export const AddSiteModal: React.FC = () => {
               placeholder="e.g. My Store"
               value={siteName}
               onChange={(e) => setSiteName(e.target.value)}
-              className="w-full px-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-white font-medium placeholder-neutral-500"
+              className="w-full px-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-neutral-900 dark:text-white font-medium placeholder-neutral-400 dark:placeholder-neutral-500"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
               WordPress Admin URL
             </label>
             <div className="relative">
-              <Globe className="w-4 h-4 text-neutral-500 absolute left-3 top-2.5" />
+              <Globe className="w-4 h-4 text-neutral-400 dark:text-neutral-500 absolute left-3 top-2.5" />
               <input
                 type="text"
                 placeholder="https://example.com/wp-admin"
                 value={adminUrl}
                 onChange={(e) => setAdminUrl(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-white font-mono placeholder-neutral-500"
+                className="w-full pl-9 pr-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-neutral-900 dark:text-white font-mono placeholder-neutral-400 dark:placeholder-neutral-500"
                 required
               />
             </div>
-            <span className="text-[11px] text-neutral-400 mt-1 block">
+            <span className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1 block">
               Enter your WordPress dashboard URL (with or without /wp-admin).
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-300 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 mb-1">
                 WordPress Username
               </label>
               <div className="relative">
-                <User className="w-4 h-4 text-neutral-500 absolute left-3 top-2.5" />
+                <User className="w-4 h-4 text-neutral-400 dark:text-neutral-500 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   placeholder="admin"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-white placeholder-neutral-500"
+                  className="w-full pl-9 pr-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500"
                   required
                 />
               </div>
@@ -141,7 +141,7 @@ export const AddSiteModal: React.FC = () => {
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-semibold uppercase tracking-wider text-neutral-300">
+                <label className="text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
                   Password
                 </label>
                 <button
@@ -151,28 +151,28 @@ export const AddSiteModal: React.FC = () => {
                       authType === 'application_password' ? 'standard' : 'application_password'
                     )
                   }
-                  className="text-[10px] uppercase text-sky-400 hover:underline font-mono"
+                  className="text-[10px] uppercase text-sky-600 dark:text-sky-400 hover:underline font-mono"
                 >
                   {authType === 'application_password' ? 'App Password' : 'Standard'}
                 </button>
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-neutral-500 absolute left-3 top-2.5" />
+                <Lock className="w-4 h-4 text-neutral-400 dark:text-neutral-500 absolute left-3 top-2.5" />
                 <input
                   type="password"
                   placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-sm bg-neutral-900 border border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-white placeholder-neutral-500"
+                  className="w-full pl-9 pr-3 py-2 text-sm bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500"
                   required
                 />
               </div>
             </div>
           </div>
 
-          <div className="p-3 rounded bg-neutral-900/60 border border-neutral-800/80 text-[11px] text-neutral-400 space-y-1">
-            <div className="flex items-center gap-1.5 font-semibold text-neutral-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="p-3 rounded-lg bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800/80 text-[11px] text-neutral-600 dark:text-neutral-400 space-y-1">
+            <div className="flex items-center gap-1.5 font-semibold text-neutral-800 dark:text-neutral-300">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
               <span>Zero-Exposure Credential Architecture</span>
             </div>
             <p>
@@ -181,11 +181,11 @@ export const AddSiteModal: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-3 border-t border-neutral-800">
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-neutral-200 dark:border-neutral-800">
             <button
               type="button"
               onClick={closeAddSiteModal}
-              className="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded bg-neutral-900 hover:bg-neutral-800 text-neutral-300 transition-colors"
+              className="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border border-neutral-300 dark:border-neutral-800 transition-colors"
             >
               Cancel
             </button>

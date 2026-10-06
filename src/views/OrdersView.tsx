@@ -118,10 +118,10 @@ export const OrdersView: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Top Action Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-neutral-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-neutral-200 dark:border-neutral-800">
         <div>
-          <h1 className="text-xl font-bold uppercase tracking-wider text-white">Order Management</h1>
-          <p className="text-xs text-neutral-400 mt-0.5">
+          <h1 className="text-xl font-bold uppercase tracking-wider text-neutral-900 dark:text-white">Order Management</h1>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
             Two-way WooCommerce synchronization ({orders.length} orders in view)
           </p>
         </div>
@@ -129,7 +129,7 @@ export const OrdersView: React.FC = () => {
         <button
           type="button"
           onClick={fetchOrders}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-neutral-900 border border-neutral-800 text-xs font-semibold uppercase tracking-wider text-neutral-300 hover:text-white self-start sm:self-auto"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 border border-neutral-300 dark:border-neutral-800 text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white self-start sm:self-auto transition-colors"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
           <span>Sync Orders</span>
@@ -137,15 +137,15 @@ export const OrdersView: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 p-3 rounded border border-neutral-800 bg-neutral-950">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 p-3 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-sm">
         <form onSubmit={handleSearchSubmit} className="flex-1 relative">
-          <Search className="w-4 h-4 text-neutral-500 absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-neutral-400 dark:text-neutral-500 absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search by Order #, customer name, phone, or email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-neutral-900 border border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-white placeholder-neutral-500"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded focus:border-sky-500 focus:outline-none text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500"
           />
         </form>
 
@@ -153,7 +153,7 @@ export const OrdersView: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-2.5 py-1.5 text-xs font-medium bg-neutral-900 border border-neutral-800 rounded text-neutral-300 focus:outline-none uppercase tracking-wide cursor-pointer"
+            className="px-2.5 py-1.5 text-xs font-medium bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-800 dark:text-neutral-300 focus:outline-none uppercase tracking-wide cursor-pointer"
           >
             <option value="all">All Order Statuses</option>
             <option value="pending">Pending</option>
@@ -172,9 +172,9 @@ export const OrdersView: React.FC = () => {
           Fetching WooCommerce orders...
         </div>
       ) : orders.length === 0 ? (
-        <div className="p-12 text-center rounded border border-dashed border-neutral-800 bg-neutral-950/40">
-          <ShoppingBag className="w-8 h-8 text-neutral-600 mx-auto mb-2" />
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-300">
+        <div className="p-12 text-center rounded-lg border border-dashed border-neutral-300 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/40">
+          <ShoppingBag className="w-8 h-8 text-neutral-400 dark:text-neutral-600 mx-auto mb-2" />
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-neutral-800 dark:text-neutral-300">
             No Orders Found
           </h3>
           <p className="text-xs text-neutral-500 mt-1 max-w-sm mx-auto">
@@ -184,9 +184,9 @@ export const OrdersView: React.FC = () => {
       ) : (
         <>
           {/* Desktop Table */}
-          <div className="hidden md:block overflow-x-auto rounded border border-neutral-800 bg-neutral-950">
-            <table className="w-full text-left text-xs text-neutral-300 border-collapse">
-              <thead className="bg-neutral-900/60 uppercase font-semibold text-[11px] text-neutral-400 border-b border-neutral-800">
+          <div className="hidden md:block overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-sm">
+            <table className="w-full text-left text-xs text-neutral-700 dark:text-neutral-300 border-collapse">
+              <thead className="bg-neutral-50 dark:bg-neutral-900/60 uppercase font-semibold text-[11px] text-neutral-600 dark:text-neutral-400 border-b border-neutral-200 dark:border-neutral-800">
                 <tr>
                   <th className="p-3">Order</th>
                   <th className="p-3">Customer</th>
@@ -199,7 +199,7 @@ export const OrdersView: React.FC = () => {
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-neutral-850">
+              <tbody className="divide-y divide-neutral-200 dark:divide-neutral-800">
                 {orders.map((o) => {
                   const dateStr = new Date(o.date).toLocaleDateString([], {
                     month: 'short',
@@ -210,12 +210,12 @@ export const OrdersView: React.FC = () => {
                     minute: '2-digit',
                   });
                   return (
-                    <tr key={o.id} className="hover:bg-neutral-900/40 transition-colors">
-                      <td className="p-3 font-mono font-bold text-white">
+                    <tr key={o.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition-colors">
+                      <td className="p-3 font-mono font-bold text-neutral-900 dark:text-white">
                         <button
                           type="button"
                           onClick={() => openOrderModal(o)}
-                          className="hover:text-sky-400 transition-colors"
+                          className="hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
                         >
                           #{o.id}
                         </button>
@@ -223,11 +223,11 @@ export const OrdersView: React.FC = () => {
                           <div className="text-[10px] text-neutral-500 font-sans">{o.siteName}</div>
                         )}
                       </td>
-                      <td className="p-3 font-medium text-white max-w-xs">
+                      <td className="p-3 font-medium text-neutral-900 dark:text-white max-w-xs">
                         <div className="truncate font-semibold">{o.customerName}</div>
                         <a
                           href={`mailto:${o.customerEmail}`}
-                          className="text-[10px] text-neutral-500 hover:text-sky-400 block truncate"
+                          className="text-[10px] text-neutral-500 hover:text-sky-600 dark:hover:text-sky-400 block truncate"
                         >
                           {o.customerEmail}
                         </a>
@@ -236,29 +236,29 @@ export const OrdersView: React.FC = () => {
                         {/* IMPORTANT: Phone number must be clickable with tel: launching native calling app */}
                         <a
                           href={`tel:${o.customerPhone}`}
-                          className="inline-flex items-center gap-1 text-sky-400 hover:underline font-semibold"
+                          className="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline font-semibold"
                           title="Call customer via device phone app"
                         >
                           <Phone className="w-3 h-3" />
                           <span>{o.customerPhone}</span>
                         </a>
                       </td>
-                      <td className="p-3 text-[11px] text-neutral-400 font-mono">
+                      <td className="p-3 text-[11px] text-neutral-600 dark:text-neutral-400 font-mono">
                         <div>{dateStr}</div>
-                        <div className="text-[10px] text-neutral-600">{timeStr}</div>
+                        <div className="text-[10px] text-neutral-400 dark:text-neutral-600">{timeStr}</div>
                       </td>
                       <td className="p-3 text-[11px]">
-                        <span className="font-semibold text-neutral-200">
+                        <span className="font-semibold text-neutral-800 dark:text-neutral-200">
                           {o.items.reduce((s, i) => s + i.quantity, 0)} items
                         </span>
                         <div className="text-[10px] text-neutral-500 truncate max-w-[120px]">
                           {o.items[0]?.name}
                         </div>
                       </td>
-                      <td className="p-3 font-mono font-bold text-white text-sm">
+                      <td className="p-3 font-mono font-bold text-neutral-900 dark:text-white text-sm">
                         ${o.total.toFixed(2)}
                       </td>
-                      <td className="p-3 text-[11px] text-neutral-400">{o.paymentMethod}</td>
+                      <td className="p-3 text-[11px] text-neutral-600 dark:text-neutral-400">{o.paymentMethod}</td>
                       <td className="p-3">
                         {/* Status Select with direct sync */}
                         <select
@@ -268,12 +268,12 @@ export const OrdersView: React.FC = () => {
                             o.status
                           )}`}
                         >
-                          <option value="pending" className="bg-neutral-900 text-white">Pending</option>
-                          <option value="processing" className="bg-neutral-900 text-white">Processing</option>
-                          <option value="on-hold" className="bg-neutral-900 text-white">On Hold</option>
-                          <option value="completed" className="bg-neutral-900 text-white">Completed</option>
-                          <option value="cancelled" className="bg-neutral-900 text-white">Cancelled</option>
-                          <option value="refunded" className="bg-neutral-900 text-white">Refunded</option>
+                          <option value="pending" className="bg-white text-black dark:bg-neutral-900 dark:text-white">Pending</option>
+                          <option value="processing" className="bg-white text-black dark:bg-neutral-900 dark:text-white">Processing</option>
+                          <option value="on-hold" className="bg-white text-black dark:bg-neutral-900 dark:text-white">On Hold</option>
+                          <option value="completed" className="bg-white text-black dark:bg-neutral-900 dark:text-white">Completed</option>
+                          <option value="cancelled" className="bg-white text-black dark:bg-neutral-900 dark:text-white">Cancelled</option>
+                          <option value="refunded" className="bg-white text-black dark:bg-neutral-900 dark:text-white">Refunded</option>
                         </select>
                       </td>
                       <td className="p-3 text-right">
@@ -281,14 +281,14 @@ export const OrdersView: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => openOrderModal(o)}
-                            className="p-1 rounded text-neutral-400 hover:text-sky-400 hover:bg-neutral-900"
+                            className="p-1 rounded text-neutral-500 hover:text-sky-600 dark:text-neutral-400 dark:hover:text-sky-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
                             title="View Order Details"
                           >
                             <Eye className="w-3.5 h-3.5" />
                           </button>
                           <a
                             href={`tel:${o.customerPhone}`}
-                            className="p-1 rounded text-neutral-400 hover:text-emerald-400 hover:bg-neutral-900"
+                            className="p-1 rounded text-neutral-500 hover:text-emerald-600 dark:text-neutral-400 dark:hover:text-emerald-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
                             title="Call Customer"
                           >
                             <Phone className="w-3.5 h-3.5" />
@@ -307,25 +307,25 @@ export const OrdersView: React.FC = () => {
             {orders.map((o) => (
               <div
                 key={o.id}
-                className="p-3.5 rounded border border-neutral-800 bg-neutral-950 flex flex-col gap-2.5"
+                className="p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 flex flex-col gap-2.5 shadow-sm"
               >
                 <div className="flex items-start justify-between">
                   <div>
                     <button
                       type="button"
                       onClick={() => openOrderModal(o)}
-                      className="font-mono font-bold text-sm text-sky-400 hover:underline"
+                      className="font-mono font-bold text-sm text-sky-600 dark:text-sky-400 hover:underline"
                     >
                       Order #{o.id}
                     </button>
-                    <div className="font-semibold text-white text-xs mt-0.5">{o.customerName}</div>
+                    <div className="font-semibold text-neutral-900 dark:text-white text-xs mt-0.5">{o.customerName}</div>
                     {selectedSiteId === 'all' && (
-                      <div className="text-[10px] text-neutral-400 font-medium">{o.siteName}</div>
+                      <div className="text-[10px] text-neutral-500 dark:text-neutral-400 font-medium">{o.siteName}</div>
                     )}
                   </div>
 
                   <div className="text-right">
-                    <div className="font-mono font-bold text-sm text-white">
+                    <div className="font-mono font-bold text-sm text-neutral-900 dark:text-white">
                       ${o.total.toFixed(2)}
                     </div>
                     <span
@@ -338,11 +338,11 @@ export const OrdersView: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-xs pt-2 border-t border-neutral-850">
+                <div className="flex items-center justify-between text-xs pt-2 border-t border-neutral-200 dark:border-neutral-800">
                   {/* Clickable tel: link for mobile native phone app */}
                   <a
                     href={`tel:${o.customerPhone}`}
-                    className="flex items-center gap-1.5 text-emerald-400 font-mono text-xs font-semibold py-1 px-2 rounded bg-neutral-900 border border-neutral-800"
+                    className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-mono text-xs font-semibold py-1 px-2 rounded bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800"
                   >
                     <Phone className="w-3 h-3" />
                     <span>Call Customer</span>
@@ -351,7 +351,7 @@ export const OrdersView: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => openOrderModal(o)}
-                    className="px-2.5 py-1 rounded bg-neutral-900 hover:bg-neutral-800 text-xs font-semibold uppercase tracking-wider text-sky-400 border border-neutral-800"
+                    className="px-2.5 py-1 rounded bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 border border-neutral-300 dark:border-neutral-800"
                   >
                     Details
                   </button>
@@ -364,12 +364,12 @@ export const OrdersView: React.FC = () => {
 
       {/* Order Details Drawer / Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="w-full max-w-2xl rounded-lg border border-neutral-800 bg-neutral-950 p-6 shadow-2xl text-neutral-100 max-h-[92vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 overflow-y-auto">
+          <div className="w-full max-w-2xl rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 shadow-2xl text-neutral-900 dark:text-neutral-100 max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-neutral-200 dark:border-neutral-800">
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="text-base font-bold uppercase tracking-wider text-white">
+                  <h2 className="text-base font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
                     Order #{selectedOrder.id}
                   </h2>
                   <span
@@ -380,14 +380,14 @@ export const OrdersView: React.FC = () => {
                     {selectedOrder.status}
                   </span>
                 </div>
-                <div className="text-xs text-neutral-400 mt-0.5">
+                <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
                   Placed on {new Date(selectedOrder.date).toLocaleString()}
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedOrder(null)}
-                className="p-1 text-neutral-400 hover:text-white"
+                className="p-1 text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -395,16 +395,16 @@ export const OrdersView: React.FC = () => {
 
             <div className="mt-4 space-y-4 text-xs">
               {/* Customer Contact & Call Customer Action */}
-              <div className="p-3.5 rounded border border-neutral-800 bg-neutral-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
+                  <div className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
                     Customer Info
                   </div>
-                  <div className="font-bold text-sm text-white mt-0.5">{selectedOrder.customerName}</div>
-                  <div className="flex flex-wrap items-center gap-3 mt-1 text-neutral-300 font-mono">
+                  <div className="font-bold text-sm text-neutral-900 dark:text-white mt-0.5">{selectedOrder.customerName}</div>
+                  <div className="flex flex-wrap items-center gap-3 mt-1 text-neutral-600 dark:text-neutral-300 font-mono">
                     <a
                       href={`mailto:${selectedOrder.customerEmail}`}
-                      className="inline-flex items-center gap-1 hover:text-sky-400"
+                      className="inline-flex items-center gap-1 hover:text-sky-600 dark:hover:text-sky-400"
                     >
                       <Mail className="w-3.5 h-3.5 text-neutral-400" />
                       <span>{selectedOrder.customerEmail}</span>
@@ -423,8 +423,8 @@ export const OrdersView: React.FC = () => {
               </div>
 
               {/* Order Status Synchronization Controller */}
-              <div className="p-3.5 rounded border border-neutral-800 bg-neutral-900/40">
-                <div className="text-[11px] font-semibold uppercase tracking-wider text-sky-400 mb-2">
+              <div className="p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/40">
+                <div className="text-[11px] font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-2">
                   WooCommerce Status Synchronization
                 </div>
                 <form onSubmit={handleModalStatusSubmit} className="space-y-3">
@@ -432,7 +432,7 @@ export const OrdersView: React.FC = () => {
                     <select
                       value={modalNewStatus}
                       onChange={(e) => setModalNewStatus(e.target.value as OrderStatus)}
-                      className="px-3 py-1.5 text-xs bg-neutral-900 border border-neutral-800 rounded text-white uppercase font-semibold focus:outline-none flex-1"
+                      className="px-3 py-1.5 text-xs bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white uppercase font-semibold focus:outline-none flex-1"
                     >
                       <option value="pending">Pending</option>
                       <option value="processing">Processing</option>
@@ -457,7 +457,7 @@ export const OrdersView: React.FC = () => {
                       placeholder="Add admin note to order..."
                       value={adminNote}
                       onChange={(e) => setAdminNote(e.target.value)}
-                      className="w-full px-3 py-1.5 text-xs bg-neutral-900 border border-neutral-800 rounded text-white placeholder-neutral-500 focus:outline-none"
+                      className="w-full px-3 py-1.5 text-xs bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none"
                     />
                   </div>
                 </form>
@@ -465,12 +465,12 @@ export const OrdersView: React.FC = () => {
 
               {/* Line Items Table */}
               <div>
-                <div className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+                <div className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-2">
                   Line Items
                 </div>
-                <div className="rounded border border-neutral-800 overflow-hidden">
+                <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-white dark:bg-neutral-950">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-neutral-900/60 uppercase font-semibold text-[10px] text-neutral-400">
+                    <thead className="bg-neutral-50 dark:bg-neutral-900/60 uppercase font-semibold text-[10px] text-neutral-600 dark:text-neutral-400">
                       <tr>
                         <th className="p-2.5">Item</th>
                         <th className="p-2.5 text-center">Qty</th>
@@ -478,15 +478,15 @@ export const OrdersView: React.FC = () => {
                         <th className="p-2.5 text-right">Total</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-neutral-850">
+                    <tbody className="divide-y divide-neutral-200 dark:divide-neutral-800">
                       {selectedOrder.items.map((item) => (
                         <tr key={item.id}>
-                          <td className="p-2.5 font-medium text-white">{item.name}</td>
+                          <td className="p-2.5 font-medium text-neutral-900 dark:text-white">{item.name}</td>
                           <td className="p-2.5 text-center font-mono">{item.quantity}</td>
-                          <td className="p-2.5 text-right font-mono text-neutral-300">
+                          <td className="p-2.5 text-right font-mono text-neutral-600 dark:text-neutral-300">
                             ${(item.total / (item.quantity || 1)).toFixed(2)}
                           </td>
-                          <td className="p-2.5 text-right font-mono font-bold text-white">
+                          <td className="p-2.5 text-right font-mono font-bold text-neutral-900 dark:text-white">
                             ${item.total.toFixed(2)}
                           </td>
                         </tr>
@@ -498,39 +498,39 @@ export const OrdersView: React.FC = () => {
 
               {/* Addresses & Financial Breakdown */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3 rounded border border-neutral-800 bg-neutral-900/30">
-                  <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 mb-1">
-                    <MapPin className="w-3.5 h-3.5 text-sky-400" />
+                <div className="p-3 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/30">
+                  <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-1">
+                    <MapPin className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
                     <span>Shipping Address</span>
                   </div>
-                  <p className="text-neutral-300 text-xs">
+                  <p className="text-neutral-700 dark:text-neutral-300 text-xs">
                     {selectedOrder.shippingAddress.address1}<br />
                     {selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.state} {selectedOrder.shippingAddress.postcode}<br />
                     {selectedOrder.shippingAddress.country}
                   </p>
                 </div>
 
-                <div className="p-3 rounded border border-neutral-800 bg-neutral-900/30">
-                  <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 mb-1">
-                    <CreditCard className="w-3.5 h-3.5 text-emerald-400" />
+                <div className="p-3 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/30">
+                  <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-1">
+                    <CreditCard className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <span>Financial Totals</span>
                   </div>
                   <div className="space-y-1 font-mono text-xs">
-                    <div className="flex justify-between text-neutral-400">
+                    <div className="flex justify-between text-neutral-500 dark:text-neutral-400">
                       <span>Subtotal:</span>
                       <span>${selectedOrder.subtotal.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between text-neutral-400">
+                    <div className="flex justify-between text-neutral-500 dark:text-neutral-400">
                       <span>Shipping:</span>
                       <span>${selectedOrder.shipping.toFixed(2)}</span>
                     </div>
                     {selectedOrder.discount > 0 && (
-                      <div className="flex justify-between text-emerald-400">
+                      <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
                         <span>Discount:</span>
                         <span>-${selectedOrder.discount.toFixed(2)}</span>
                       </div>
                     )}
-                    <div className="flex justify-between font-bold text-white text-sm pt-1 border-t border-neutral-800">
+                    <div className="flex justify-between font-bold text-neutral-900 dark:text-white text-sm pt-1 border-t border-neutral-200 dark:border-neutral-800">
                       <span>Total:</span>
                       <span>${selectedOrder.total.toFixed(2)}</span>
                     </div>
@@ -539,23 +539,23 @@ export const OrdersView: React.FC = () => {
               </div>
 
               {selectedOrder.customerNote && (
-                <div className="p-3 rounded border border-neutral-800 bg-neutral-900/30">
-                  <div className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 mb-1 flex items-center gap-1">
-                    <FileText className="w-3 h-3 text-amber-400" />
+                <div className="p-3 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/30">
+                  <div className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-1 flex items-center gap-1">
+                    <FileText className="w-3 h-3 text-amber-500 dark:text-amber-400" />
                     <span>Customer / Admin Notes</span>
                   </div>
-                  <p className="text-neutral-300 whitespace-pre-line text-xs font-mono">
+                  <p className="text-neutral-700 dark:text-neutral-300 whitespace-pre-line text-xs font-mono">
                     {selectedOrder.customerNote}
                   </p>
                 </div>
               )}
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-4 mt-4 border-t border-neutral-800">
+            <div className="flex items-center justify-end gap-2 pt-4 mt-4 border-t border-neutral-200 dark:border-neutral-800">
               <button
                 type="button"
                 onClick={() => setSelectedOrder(null)}
-                className="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded bg-neutral-900 hover:bg-neutral-800 text-neutral-300"
+                className="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300"
               >
                 Close
               </button>

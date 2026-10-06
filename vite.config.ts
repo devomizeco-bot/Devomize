@@ -14,9 +14,9 @@ export default defineConfig(() => {
         includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'icon.svg'],
         manifest: {
           id: '/',
-          name: 'WP Master Control Panel',
-          short_name: 'WP Master',
-          description: 'Centralized Master WordPress & WooCommerce Control Panel PWA for managing multiple sites, products, orders, users, and admin access.',
+          name: 'DEVOMIZE Control Panel',
+          short_name: 'DEVOMIZE',
+          description: 'DEVOMIZE - Centralized Master WordPress & WooCommerce Control Panel PWA for managing multiple sites, products, orders, users, and admin access.',
           theme_color: '#000000',
           background_color: '#000000',
           display: 'standalone',

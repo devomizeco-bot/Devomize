@@ -43,59 +43,49 @@ export async function signUpUser(data: {
 }): Promise<{ user: UserProfile | null; error: string | null }> {
   const client = getSupabase();
 
-  if (client) {
-    try {
-      const { data: authData, error: authError } = await client.auth.signUp({
-        email: data.email,
-        password: data.password,
-        options: {
-          data: {
-            name: data.name,
-            phone: data.phone,
-          },
-        },
-      });
-
-      if (authError) {
-        return { user: null, error: authError.message };
-      }
-
-      if (authData.user) {
-        // Upsert into profiles table
-        const profile: UserProfile = {
-          id: authData.user.id,
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          role: 'Administrator',
-          createdAt: new Date().toISOString(),
-        };
-
-        await client.from('profiles').upsert([profile]);
-        return { user: profile, error: null };
-      }
-    } catch (err: any) {
-      return { user: null, error: err.message || 'Supabase signup failed' };
-    }
+  if (!client) {
+    return { user: null, error: 'Supabase client not initialized' };
   }
 
-  // Local fallback persistence
-  const localProfile: UserProfile = {
-    id: 'admin-' + Date.now(),
-    name: data.name,
-    email: data.email,
-    phone: data.phone,
-    role: 'Administrator',
-    createdAt: new Date().toISOString(),
-  };
+  try {
+    const { data: authData, error: authError } = await client.auth.signUp({
+      email: data.email,
+      password: data.password,
+      options: {
+        data: {
+          name: data.name,
+          phone: data.phone,
+        },
+      },
+    });
 
-  localStorage.setItem(
-    STORAGE_KEY_LOCAL_USER,
-    JSON.stringify({ email: data.email, password: data.password })
-  );
-  localStorage.setItem(STORAGE_KEY_LOCAL_PROFILE, JSON.stringify(localProfile));
+    if (authError) {
+      return { user: null, error: authError.message };
+    }
 
-  return { user: localProfile, error: null };
+    if (authData.user) {
+      const profile: UserProfile = {
+        id: authData.user.id,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        role: 'Administrator',
+        createdAt: new Date().toISOString(),
+      };
+
+      try {
+        await client.from('profiles').upsert([profile]);
+      } catch {
+        // Continue even if table not created yet
+      }
+
+      return { user: profile, error: null };
+    }
+
+    return { user: null, error: 'Registration succeeded. Please check your email if confirmation is required, or sign in.' };
+  } catch (err: any) {
+    return { user: null, error: err.message || 'Supabase signup failed' };
+  }
 }
 
 export async function signInUser(
@@ -104,122 +94,87 @@ export async function signInUser(
 ): Promise<{ user: UserProfile | null; error: string | null }> {
   const client = getSupabase();
 
-  if (client) {
-    try {
-      const { data: authData, error: authError } = await client.auth.signInWithPassword({
-        email,
-        password,
-      });
+  if (!client) {
+    return { user: null, error: 'Supabase client not initialized' };
+  }
 
-      if (authError) {
-        return { user: null, error: authError.message };
-      }
+  try {
+    const { data: authData, error: authError } = await client.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (authData.user) {
-        // Fetch profile
-        const { data: profileData } = await client
+    if (authError) {
+      return { user: null, error: authError.message };
+    }
+
+    if (authData.user) {
+      // Fetch profile
+      let profileData = null;
+      try {
+        const res = await client
           .from('profiles')
           .select('*')
           .eq('id', authData.user.id)
           .single();
-
-        const userProfile: UserProfile = {
-          id: authData.user.id,
-          name: profileData?.name || authData.user.user_metadata?.name || email.split('@')[0],
-          email: authData.user.email || email,
-          phone: profileData?.phone || authData.user.user_metadata?.phone || '',
-          role: profileData?.role || 'Administrator',
-          createdAt: authData.user.created_at,
-        };
-
-        return { user: userProfile, error: null };
+        profileData = res.data;
+      } catch {
+        // fallback to metadata
       }
-    } catch (err: any) {
-      return { user: null, error: err.message || 'Supabase login failed' };
-    }
-  }
 
-  // Local fallback
-  const savedCreds = localStorage.getItem(STORAGE_KEY_LOCAL_USER);
-  const savedProfile = localStorage.getItem(STORAGE_KEY_LOCAL_PROFILE);
-
-  if (savedCreds) {
-    const creds = JSON.parse(savedCreds);
-    if (creds.email.toLowerCase() === email.toLowerCase() && creds.password === password) {
-      const profile = savedProfile ? JSON.parse(savedProfile) : {
-        id: 'admin-local',
-        name: 'Master Admin',
-        email,
-        phone: '',
-        role: 'Administrator',
+      const userProfile: UserProfile = {
+        id: authData.user.id,
+        name: profileData?.name || authData.user.user_metadata?.name || email.split('@')[0],
+        email: authData.user.email || email,
+        phone: profileData?.phone || authData.user.user_metadata?.phone || '',
+        role: profileData?.role || 'Administrator',
+        createdAt: authData.user.created_at,
       };
-      return { user: profile, error: null };
+
+      return { user: userProfile, error: null };
     }
-  }
 
-  // Initial seed admin if clean install without signup yet
-  if (email === 'admin@wpmaster.local' && password === 'admin123') {
-    const defaultProfile: UserProfile = {
-      id: 'admin-default',
-      name: 'WP Master Admin',
-      email: 'admin@wpmaster.local',
-      phone: '+1 (555) 019-2831',
-      role: 'Administrator',
-      createdAt: new Date().toISOString(),
-    };
-    localStorage.setItem(STORAGE_KEY_LOCAL_PROFILE, JSON.stringify(defaultProfile));
-    return { user: defaultProfile, error: null };
+    return { user: null, error: 'User could not be loaded' };
+  } catch (err: any) {
+    return { user: null, error: err.message || 'Supabase login failed' };
   }
-
-  return { user: null, error: 'Invalid email or password' };
 }
 
 export async function getCurrentUser(): Promise<UserProfile | null> {
   const client = getSupabase();
+  if (!client) return null;
 
-  if (client) {
-    try {
-      const { data } = await client.auth.getSession();
-      if (data.session?.user) {
-        const u = data.session.user;
-        const { data: profileData } = await client
+  try {
+    const { data } = await client.auth.getSession();
+    if (data.session?.user) {
+      const u = data.session.user;
+      let profileData = null;
+      try {
+        const res = await client
           .from('profiles')
           .select('*')
           .eq('id', u.id)
           .single();
-
-        return {
-          id: u.id,
-          name: profileData?.name || u.user_metadata?.name || u.email?.split('@')[0] || 'Admin',
-          email: u.email || '',
-          phone: profileData?.phone || u.user_metadata?.phone || '',
-          role: profileData?.role || 'Administrator',
-          createdAt: u.created_at,
-        };
+        profileData = res.data;
+      } catch {
+        // fallback
       }
-    } catch {
-      // fallback
+
+      return {
+        id: u.id,
+        name: profileData?.name || u.user_metadata?.name || u.email?.split('@')[0] || 'Admin',
+        email: u.email || '',
+        phone: profileData?.phone || u.user_metadata?.phone || '',
+        role: profileData?.role || 'Administrator',
+        createdAt: u.created_at,
+      };
     }
+  } catch {
+    // Return null if session cannot be retrieved
   }
 
-  const savedProfile = localStorage.getItem(STORAGE_KEY_LOCAL_PROFILE);
-  if (savedProfile) {
-    try {
-      return JSON.parse(savedProfile);
-    } catch {
-      return null;
-    }
-  }
-
-  // Default demo active session for seamless first-time review
-  return {
-    id: 'admin-default',
-    name: 'WP Master Admin',
-    email: 'admin@wpmaster.local',
-    phone: '+1 (555) 019-2831',
-    role: 'Administrator',
-    createdAt: new Date().toISOString(),
-  };
+  // Never return fake user - return null so login page is displayed
+  return null;
 }
 
 export async function signOutUser() {
@@ -232,6 +187,7 @@ export async function signOutUser() {
     }
   }
   localStorage.removeItem(STORAGE_KEY_LOCAL_PROFILE);
+  localStorage.removeItem(STORAGE_KEY_LOCAL_USER);
 }
 
 export async function updateUserProfile(profile: Partial<UserProfile>): Promise<UserProfile | null> {

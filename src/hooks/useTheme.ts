@@ -15,16 +15,26 @@ export function useTheme() {
 
   useEffect(() => {
     const root = document.documentElement;
+    const body = document.body;
+
     if (theme === 'dark') {
       root.classList.add('dark');
       root.classList.remove('light');
-      document.body.style.backgroundColor = '#000000';
-      document.body.style.color = '#f8fafc';
+      root.setAttribute('data-theme', 'dark');
+      if (body) {
+        body.classList.add('dark');
+        body.classList.remove('light');
+        body.setAttribute('data-theme', 'dark');
+      }
     } else {
       root.classList.add('light');
       root.classList.remove('dark');
-      document.body.style.backgroundColor = '#ffffff';
-      document.body.style.color = '#0f172a';
+      root.setAttribute('data-theme', 'light');
+      if (body) {
+        body.classList.add('light');
+        body.classList.remove('dark');
+        body.setAttribute('data-theme', 'light');
+      }
     }
 
     const metaTheme = document.querySelector('meta[name="theme-color"]');

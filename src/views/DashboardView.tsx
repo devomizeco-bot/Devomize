@@ -51,26 +51,26 @@ export const DashboardView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Header & Range Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-neutral-800">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-neutral-200 dark:border-neutral-800">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+            <h1 className="text-xl font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
               {selectedSiteId === 'all' ? 'All Connected Stores Overview' : currentSite?.name || 'Store Dashboard'}
             </h1>
             {selectedSiteId !== 'all' && currentSite && (
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-900 border border-neutral-800 text-sky-400">
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-100 border border-neutral-300 text-sky-600 dark:bg-neutral-900 dark:border-neutral-800 dark:text-sky-400">
                 WP {currentSite.wpVersion || '6.7'}
               </span>
             )}
           </div>
-          <p className="text-xs text-neutral-400 mt-0.5">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
             Real-time synchronization across {selectedSiteId === 'all' ? `${sites.length} WordPress websites` : 'WordPress REST API'}
           </p>
         </div>
 
         {/* Date Filter & Actions */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center p-0.5 bg-neutral-900 rounded border border-neutral-800">
+          <div className="flex items-center p-0.5 bg-neutral-100 dark:bg-neutral-900 rounded border border-neutral-300 dark:border-neutral-800">
             {periods.map((p) => (
               <button
                 key={p.id}
@@ -78,8 +78,8 @@ export const DashboardView: React.FC = () => {
                 onClick={() => setPeriod(p.id)}
                 className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded transition-colors ${
                   period === p.id
-                    ? 'bg-neutral-800 text-white shadow-xs'
-                    : 'text-neutral-400 hover:text-white'
+                    ? 'bg-white text-black shadow-xs dark:bg-neutral-800 dark:text-white'
+                    : 'text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'
                 }`}
               >
                 {p.label}
@@ -90,7 +90,7 @@ export const DashboardView: React.FC = () => {
           <button
             type="button"
             onClick={fetchStats}
-            className="p-1.5 rounded bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white transition-colors"
+            className="p-1.5 rounded bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
             title="Refresh Data"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
@@ -101,129 +101,129 @@ export const DashboardView: React.FC = () => {
       {/* Primary Key Metrics Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
         {/* Total Sales */}
-        <div className="p-3.5 rounded border border-neutral-800 bg-neutral-950 text-neutral-100 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-neutral-400 mb-2">
+        <div className="p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 flex flex-col justify-between shadow-sm">
+          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400 mb-2">
             <span className="text-[11px] font-semibold uppercase tracking-wider">Total Sales</span>
-            <DollarSign className="w-4 h-4 text-emerald-400" />
+            <DollarSign className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
           </div>
-          <div className="text-2xl font-bold tracking-tight text-white font-mono">
+          <div className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono">
             ${stats ? stats.totalSales.toLocaleString('en-US', { minimumFractionDigits: 2 }) : '0.00'}
           </div>
-          <span className="text-[10px] text-neutral-500 uppercase mt-1">Confirmed Revenue</span>
+          <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase mt-1">Confirmed Revenue</span>
         </div>
 
         {/* Total Orders */}
-        <div className="p-3.5 rounded border border-neutral-800 bg-neutral-950 text-neutral-100 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-neutral-400 mb-2">
+        <div className="p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 flex flex-col justify-between shadow-sm">
+          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400 mb-2">
             <span className="text-[11px] font-semibold uppercase tracking-wider">Total Orders</span>
-            <ShoppingBag className="w-4 h-4 text-sky-400" />
+            <ShoppingBag className="w-4 h-4 text-sky-500 dark:text-sky-400" />
           </div>
-          <div className="text-2xl font-bold tracking-tight text-white font-mono">
+          <div className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono">
             {stats?.totalOrders ?? 0}
           </div>
-          <span className="text-[10px] text-neutral-500 uppercase mt-1">Across Selected Scope</span>
+          <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase mt-1">Across Selected Scope</span>
         </div>
 
         {/* Total Products */}
-        <div className="p-3.5 rounded border border-neutral-800 bg-neutral-950 text-neutral-100 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-neutral-400 mb-2">
+        <div className="p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 flex flex-col justify-between shadow-sm">
+          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400 mb-2">
             <span className="text-[11px] font-semibold uppercase tracking-wider">Total Products</span>
-            <Package className="w-4 h-4 text-violet-400" />
+            <Package className="w-4 h-4 text-violet-500 dark:text-violet-400" />
           </div>
-          <div className="text-2xl font-bold tracking-tight text-white font-mono">
+          <div className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono">
             {stats?.totalProducts ?? 0}
           </div>
-          <span className="text-[10px] text-neutral-500 uppercase mt-1">Catalog Listings</span>
+          <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase mt-1">Catalog Listings</span>
         </div>
 
         {/* Total Views */}
-        <div className="p-3.5 rounded border border-neutral-800 bg-neutral-950 text-neutral-100 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-neutral-400 mb-2">
+        <div className="p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 flex flex-col justify-between shadow-sm">
+          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400 mb-2">
             <span className="text-[11px] font-semibold uppercase tracking-wider">Total Views</span>
-            <Eye className="w-4 h-4 text-amber-400" />
+            <Eye className="w-4 h-4 text-amber-500 dark:text-amber-400" />
           </div>
-          <div className="text-2xl font-bold tracking-tight text-white font-mono">
+          <div className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono">
             {stats?.totalViews ? stats.totalViews.toLocaleString() : 'N/A'}
           </div>
-          <span className="text-[10px] text-neutral-500 uppercase mt-1">Store Traffic</span>
+          <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase mt-1">Store Traffic</span>
         </div>
 
         {/* Registered Users */}
-        <div className="p-3.5 rounded border border-neutral-800 bg-neutral-950 text-neutral-100 flex flex-col justify-between col-span-2 md:col-span-1">
-          <div className="flex items-center justify-between text-neutral-400 mb-2">
+        <div className="p-3.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 flex flex-col justify-between col-span-2 md:col-span-1 shadow-sm">
+          <div className="flex items-center justify-between text-neutral-500 dark:text-neutral-400 mb-2">
             <span className="text-[11px] font-semibold uppercase tracking-wider">Registered Users</span>
-            <Users className="w-4 h-4 text-indigo-400" />
+            <Users className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
           </div>
-          <div className="text-2xl font-bold tracking-tight text-white font-mono">
+          <div className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono">
             {stats?.registeredUsers ?? 0}
           </div>
-          <span className="text-[10px] text-neutral-500 uppercase mt-1">WP Accounts & Customers</span>
+          <span className="text-[10px] text-neutral-500 dark:text-neutral-400 uppercase mt-1">WP Accounts & Customers</span>
         </div>
       </div>
 
       {/* Secondary Status Breakdown Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
-        <div className="p-2.5 rounded border border-neutral-850 bg-neutral-950/70 flex items-center justify-between">
+        <div className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950/70 flex items-center justify-between shadow-xs">
           <div>
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-amber-400">Pending</div>
-            <div className="text-lg font-bold font-mono text-white">{stats?.pendingOrders ?? 0}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-amber-500 dark:text-amber-400">Pending</div>
+            <div className="text-lg font-bold font-mono text-neutral-900 dark:text-white">{stats?.pendingOrders ?? 0}</div>
           </div>
-          <Clock className="w-4 h-4 text-amber-400/70" />
+          <Clock className="w-4 h-4 text-amber-500/70" />
         </div>
 
-        <div className="p-2.5 rounded border border-neutral-850 bg-neutral-950/70 flex items-center justify-between">
+        <div className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950/70 flex items-center justify-between shadow-xs">
           <div>
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-sky-400">Processing</div>
-            <div className="text-lg font-bold font-mono text-white">{stats?.processingOrders ?? 0}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-sky-500 dark:text-sky-400">Processing</div>
+            <div className="text-lg font-bold font-mono text-neutral-900 dark:text-white">{stats?.processingOrders ?? 0}</div>
           </div>
-          <RefreshCw className="w-4 h-4 text-sky-400/70" />
+          <RefreshCw className="w-4 h-4 text-sky-500/70" />
         </div>
 
-        <div className="p-2.5 rounded border border-neutral-850 bg-neutral-950/70 flex items-center justify-between">
+        <div className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950/70 flex items-center justify-between shadow-xs">
           <div>
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-400">Completed</div>
-            <div className="text-lg font-bold font-mono text-white">{stats?.completedOrders ?? 0}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-500 dark:text-emerald-400">Completed</div>
+            <div className="text-lg font-bold font-mono text-neutral-900 dark:text-white">{stats?.completedOrders ?? 0}</div>
           </div>
-          <CheckCircle2 className="w-4 h-4 text-emerald-400/70" />
+          <CheckCircle2 className="w-4 h-4 text-emerald-500/70" />
         </div>
 
-        <div className="p-2.5 rounded border border-neutral-850 bg-neutral-950/70 flex items-center justify-between">
+        <div className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950/70 flex items-center justify-between shadow-xs">
           <div>
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-neutral-400">Cancelled</div>
-            <div className="text-lg font-bold font-mono text-white">{stats?.cancelledOrders ?? 0}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-neutral-600 dark:text-neutral-400">Cancelled</div>
+            <div className="text-lg font-bold font-mono text-neutral-900 dark:text-white">{stats?.cancelledOrders ?? 0}</div>
           </div>
-          <XCircle className="w-4 h-4 text-neutral-500" />
+          <XCircle className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
         </div>
 
-        <div className="p-2.5 rounded border border-neutral-850 bg-neutral-950/70 flex items-center justify-between col-span-2 sm:col-span-1">
+        <div className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950/70 flex items-center justify-between col-span-2 sm:col-span-1 shadow-xs">
           <div>
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-rose-400">Refunded</div>
-            <div className="text-lg font-bold font-mono text-white">{stats?.refundedOrders ?? 0}</div>
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-rose-500 dark:text-rose-400">Refunded</div>
+            <div className="text-lg font-bold font-mono text-neutral-900 dark:text-white">{stats?.refundedOrders ?? 0}</div>
           </div>
-          <RotateCcw className="w-4 h-4 text-rose-400/70" />
+          <RotateCcw className="w-4 h-4 text-rose-500/70" />
         </div>
       </div>
 
       {/* Analytics Graph */}
-      <div className="p-4 rounded border border-neutral-800 bg-neutral-950 text-neutral-100">
+      <div className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-900 dark:text-white">
               Store Performance Analytics
             </h2>
-            <p className="text-xs text-neutral-400">
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
               Synchronized WooCommerce metrics over selected timeline
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 p-0.5 rounded bg-neutral-900 border border-neutral-800 self-start sm:self-auto">
+          <div className="flex items-center gap-1.5 p-0.5 rounded bg-neutral-100 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 self-start sm:self-auto">
             <button
               type="button"
               onClick={() => setActiveMetric('revenue')}
               className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded transition-colors ${
                 activeMetric === 'revenue'
-                  ? 'bg-neutral-800 text-sky-400'
-                  : 'text-neutral-400 hover:text-white'
+                  ? 'bg-white text-sky-600 shadow-xs dark:bg-neutral-800 dark:text-sky-400'
+                  : 'text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'
               }`}
             >
               Revenue ($)
@@ -233,8 +233,8 @@ export const DashboardView: React.FC = () => {
               onClick={() => setActiveMetric('orders')}
               className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded transition-colors ${
                 activeMetric === 'orders'
-                  ? 'bg-neutral-800 text-sky-400'
-                  : 'text-neutral-400 hover:text-white'
+                  ? 'bg-white text-sky-600 shadow-xs dark:bg-neutral-800 dark:text-sky-400'
+                  : 'text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'
               }`}
             >
               Orders
@@ -244,8 +244,8 @@ export const DashboardView: React.FC = () => {
               onClick={() => setActiveMetric('views')}
               className={`px-2.5 py-1 text-xs font-semibold uppercase tracking-wider rounded transition-colors ${
                 activeMetric === 'views'
-                  ? 'bg-neutral-800 text-sky-400'
-                  : 'text-neutral-400 hover:text-white'
+                  ? 'bg-white text-sky-600 shadow-xs dark:bg-neutral-800 dark:text-sky-400'
+                  : 'text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'
               }`}
             >
               Views
@@ -300,14 +300,16 @@ export const DashboardView: React.FC = () => {
                             y1={y}
                             x2={width - padding}
                             y2={y}
-                            stroke="#262626"
+                            stroke="currentColor"
+                            className="text-neutral-200 dark:text-neutral-800"
                             strokeDasharray="3 3"
                             strokeWidth="1"
                           />
                           <text
                             x={padding - 5}
                             y={y + 3}
-                            fill="#737373"
+                            fill="currentColor"
+                            className="text-neutral-400 dark:text-neutral-500"
                             fontSize="9"
                             fontFamily="JetBrains Mono"
                             textAnchor="end"
@@ -322,7 +324,7 @@ export const DashboardView: React.FC = () => {
                     <path d={areaString} fill="url(#chartGradient)" />
 
                     {/* Line */}
-                    <path d={pathString} fill="none" stroke="#38bdf8" strokeWidth="2.5" strokeLinecap="round" />
+                    <path d={pathString} fill="none" stroke="#0284c7" className="dark:stroke-sky-400" strokeWidth="2.5" strokeLinecap="round" />
 
                     {/* Interactive Points */}
                     {coordinates.map((pt, idx) => (
@@ -331,10 +333,8 @@ export const DashboardView: React.FC = () => {
                           cx={pt.x}
                           cy={pt.y}
                           r="4"
-                          fill="#000000"
-                          stroke="#38bdf8"
+                          className="fill-white dark:fill-black stroke-sky-600 dark:stroke-sky-400 transition-transform group-hover:scale-150"
                           strokeWidth="2"
-                          className="transition-transform group-hover:scale-150"
                         />
                         {/* Tooltip on hover */}
                         <title>
@@ -353,7 +353,8 @@ export const DashboardView: React.FC = () => {
                           key={idx}
                           x={pt.x}
                           y={height - 2}
-                          fill="#737373"
+                          fill="currentColor"
+                          className="text-neutral-500 dark:text-neutral-400"
                           fontSize="9"
                           fontFamily="sans-serif"
                           textAnchor="middle"
@@ -379,13 +380,13 @@ export const DashboardView: React.FC = () => {
         <button
           type="button"
           onClick={() => setActiveTab('products')}
-          className="p-4 rounded border border-neutral-800 bg-neutral-950 text-left hover:border-neutral-700 transition-colors group"
+          className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left hover:border-neutral-300 dark:hover:border-neutral-700 shadow-sm transition-colors group"
         >
-          <div className="flex items-center justify-between text-neutral-400 group-hover:text-white">
+          <div className="flex items-center justify-between text-neutral-600 dark:text-neutral-400 group-hover:text-sky-600 dark:group-hover:text-white">
             <span className="text-xs font-bold uppercase tracking-wider">Manage Products</span>
-            <ArrowUpRight className="w-4 h-4 text-sky-400" />
+            <ArrowUpRight className="w-4 h-4 text-sky-500 dark:text-sky-400" />
           </div>
-          <p className="text-xs text-neutral-400 mt-1">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
             View stock quantities, update prices, and create new WooCommerce listings.
           </p>
         </button>
@@ -393,13 +394,13 @@ export const DashboardView: React.FC = () => {
         <button
           type="button"
           onClick={() => setActiveTab('orders')}
-          className="p-4 rounded border border-neutral-800 bg-neutral-950 text-left hover:border-neutral-700 transition-colors group"
+          className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left hover:border-neutral-300 dark:hover:border-neutral-700 shadow-sm transition-colors group"
         >
-          <div className="flex items-center justify-between text-neutral-400 group-hover:text-white">
+          <div className="flex items-center justify-between text-neutral-600 dark:text-neutral-400 group-hover:text-sky-600 dark:group-hover:text-white">
             <span className="text-xs font-bold uppercase tracking-wider">Manage Orders</span>
-            <ArrowUpRight className="w-4 h-4 text-sky-400" />
+            <ArrowUpRight className="w-4 h-4 text-sky-500 dark:text-sky-400" />
           </div>
-          <p className="text-xs text-neutral-400 mt-1">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
             Change order statuses with real two-way sync, view customer details, and call directly.
           </p>
         </button>
@@ -407,13 +408,13 @@ export const DashboardView: React.FC = () => {
         <button
           type="button"
           onClick={() => setActiveTab('browser')}
-          className="p-4 rounded border border-neutral-800 bg-neutral-950 text-left hover:border-neutral-700 transition-colors group"
+          className="p-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left hover:border-neutral-300 dark:hover:border-neutral-700 shadow-sm transition-colors group"
         >
-          <div className="flex items-center justify-between text-neutral-400 group-hover:text-white">
+          <div className="flex items-center justify-between text-neutral-600 dark:text-neutral-400 group-hover:text-sky-600 dark:group-hover:text-white">
             <span className="text-xs font-bold uppercase tracking-wider">Internal WP Browser</span>
-            <ArrowUpRight className="w-4 h-4 text-sky-400" />
+            <ArrowUpRight className="w-4 h-4 text-sky-500 dark:text-sky-400" />
           </div>
-          <p className="text-xs text-neutral-400 mt-1">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
             Directly configure plugins, themes, and page builder settings inside control panel.
           </p>
         </button>
